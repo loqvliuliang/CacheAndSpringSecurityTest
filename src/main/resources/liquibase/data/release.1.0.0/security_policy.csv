@@ -1,0 +1,2 @@
+company_id;authentication_method;auth_target_url;login_attempt;is_require_number;is_require_mix_case;is_require_symbol;max_same_password_count;last_updated_date;last_updated_by
+839514855899537408;103;;0;0;0;0;0;2017-03-09 00:35:14;0

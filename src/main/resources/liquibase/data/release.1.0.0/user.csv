@@ -1,0 +1,2 @@
+id;company_id;username;email;phone;password_hash;language;is_locked;is_enabled;is_deleted;created_date;created_by;last_updated_date;last_updated_by
+839514855899537400;839514855899537408;system;system@huilianyi.com;12345678901;$2a$10$PAIwoL98REr0Y2Wu/j4OdOwfR1pGQ2UAMW/rWiQY0mFz4qqjv1n4i;zh_cn;0;1;0;2017-03-09 00:35:14;0;2017-03-09 00:35:14;0

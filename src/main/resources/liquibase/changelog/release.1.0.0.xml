@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2017. Shanghai Zhenhui Information Technology Co,. ltd.
+  ~ All rights are reserved.
+  -->
+
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="autoIncrement" value="true" dbms="mysql,h2,postgresql,oracle"/>
+    <changeSet id="201706051428001" author="markfred.chen">
+        <createTable tableName="atl_realm">
+            <column name="id" type="bigint">
+                <constraints
+                        nullable="false"
+                        primaryKey="true"
+                        primaryKeyName="pk_atl_realm_id"/>
+            </column>
+            <column name="realm_name" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="idx_uq_realm_name"/>
+            </column>
+            <column name="is_enabled" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_deleted" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint"/>
+            <column name="last_updated_date" type="timestamp"/>
+            <column name="last_updated_by" type="bigint"/>
+        </createTable>
+        <createTable tableName="atl_company">
+            <column name="id" type="bigint">
+                <constraints
+                        nullable="false"
+                        primaryKey="true"
+                        primaryKeyName="pk_atl_company_id"/>
+            </column>
+            <column name="realm_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_company_realm_id"
+                             references="atl_realm(id)"/>
+            </column>
+            <column name="company_name" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="idx_uq_company_name"/>
+            </column>
+            <column name="is_enabled" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_deleted" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint"/>
+            <column name="last_updated_date" type="timestamp"/>
+            <column name="last_updated_by" type="bigint"/>
+        </createTable>
+
+        <createTable tableName="atl_user">
+            <column name="id" type="bigint">
+                <constraints
+                        nullable="false"
+                        primaryKey="true"
+                        primaryKeyName="pk_atl_user_id"/>
+            </column>
+            <column name="company_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_user_company_id" references="atl_company(id)"/>
+            </column>
+            <column name="username" type="varchar(200)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="idx_uq_user_username"/>
+            </column>
+            <column name="phone" type="varchar(20)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="idx_uq_user_email"/>
+            </column>
+            <column name="password_hash" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="language" type="varchar(10)"/>
+            <column name="is_locked" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_enabled" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_deleted" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint"/>
+            <column name="last_updated_date" type="timestamp"/>
+            <column name="last_updated_by" type="bigint"/>
+        </createTable>
+        <createTable tableName="atl_role">
+            <column name="id" type="bigint">
+                <constraints
+                        nullable="false"
+                        primaryKey="true"
+                        primaryKeyName="pk_atl_role_id"/>
+            </column>
+            <column name="company_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_role_company_id"
+                             references="atl_company(id)"/>
+            </column>
+            <column name="role_name" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="idx_uq_role_name"/>
+            </column>
+            <column name="is_enabled" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_deleted" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint"/>
+            <column name="last_updated_date" type="timestamp"/>
+            <column name="last_updated_by" type="bigint"/>
+        </createTable>
+        <createTable tableName="atl_authority">
+            <column name="id" type="bigint">
+                <constraints
+                        nullable="false"
+                        primaryKey="true"
+                        primaryKeyName="pk_atl_authority_id"/>
+            </column>
+            <column name="authority_name" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="idx_uq_authority_name"/>
+            </column>
+            <column name="is_enabled" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_deleted" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint"/>
+            <column name="last_updated_date" type="timestamp"/>
+            <column name="last_updated_by" type="bigint"/>
+        </createTable>
+
+
+        <createTable tableName="atl_user_role">
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_user_role_user_id"
+                             references="atl_user(id)"/>
+            </column>
+            <column name="role_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_user_role_role_id"
+                             references="atl_role(id)"/>
+            </column>
+        </createTable>
+        <createTable tableName="atl_role_authority">
+            <column name="role_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_user_authority_role_id"
+                             references="atl_role(id)"/>
+            </column>
+            <column name="authority_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="fk_role_authority_authority_id"
+                             references="atl_authority(id)"/>
+            </column>
+        </createTable>
+        <loadData encoding="UTF-8"
+                  file="db/liquibase/data/release.1.0.0/realm.csv"
+                  separator=";"
+                  tableName="atl_realm">
+            <column name="is_enabled" type="boolean"/>
+            <column name="is_deleted" type="boolean"/>
+        </loadData>
+        <loadData encoding="UTF-8"
+                  file="db/liquibase/data/release.1.0.0/company.csv"
+                  separator=";"
+                  tableName="atl_company">
+            <column name="is_enabled" type="boolean"/>
+            <column name="is_deleted" type="boolean"/>
+        </loadData>
+        <loadData encoding="UTF-8"
+                  file="db/liquibase/data/release.1.0.0/user.csv"
+                  separator=";"
+                  tableName="atl_user">
+            <column name="is_locked" type="boolean"/>
+            <column name="is_enabled" type="boolean"/>
+            <column name="is_deleted" type="boolean"/>
+        </loadData>
+        <loadData encoding="UTF-8"
+                  file="db/liquibase/data/release.1.0.0/role.csv"
+                  separator=";"
+                  tableName="atl_role">
+            <column name="is_enabled" type="boolean"/>
+            <column name="is_deleted" type="boolean"/>
+        </loadData>
+        <loadData encoding="UTF-8"
+                  file="db/liquibase/data/release.1.0.0/authority.csv"
+                  separator=";"
+                  tableName="atl_authority">
+            <column name="is_enabled" type="boolean"/>
+            <column name="is_deleted" type="boolean"/>
+        </loadData>
+        <loadData encoding="UTF-8"
+                  file="db/liquibase/data/release.1.0.0/role_authority.csv"
+                  separator=";"
+                  tableName="atl_role_authority">
+        </loadData>
+        <loadData encoding="UTF-8"
+                  file="db/liquibase/data/release.1.0.0/user_role.csv"
+                  separator=";"
+                  tableName="atl_user_role">
+        </loadData>
+
+        <createTable tableName="oauth_client_detail">
+            <column name="id" type="bigint">
+                <constraints
+                        nullable="false"
+                        primaryKey="true"
+                        primaryKeyName="pk_oauth_client_detail_id"/>
+            </column>
+            <column name="client_id" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="idx_uq_oauth_client_client_id"/>
+            </column>
+            <column name="client_secret" type="varchar(255)"/>
+            <column name="access_token_validity_seconds" type="int"/>
+            <column name="refresh_token_validity_seconds" type="int"/>
+            <column name="resource_ids" type="varchar(1000)"/>
+            <column name="scopes" type="varchar(255)"/>
+            <column name="authorized_grant_types" type="varchar(255)"/>
+            <column name="registered_redirect_uri" type="varchar(255)"/>
+            <column name="authorities" type="varchar(1000)"/>
+            <column name="auto_approve_scopes" type="varchar(4096)"/>
+            <column name="additional_information" type="varchar(4096)"/>
+            <column name="is_enabled" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_deleted" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint"/>
+            <column name="last_updated_date" type="timestamp"/>
+            <column name="last_updated_by" type="bigint"/>
+        </createTable>
+        <loadData encoding="UTF-8"
+                  file="db/liquibase/data/release.1.0.0/client_detail.csv"
+                  separator=";"
+                  tableName="oauth_client_detail">
+            <column name="is_enabled" type="boolean"/>
+            <column name="is_deleted" type="boolean"/>
+        </loadData>
+
+        <createTable tableName="atl_security_policy">
+            <column name="company_id" type="bigint" remarks="FK for company id">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_atl_security_policy_company_id"/>
+            </column>
+            <column name="authentication_method" type="int" defaultValue="101"
+                    remarks="Company Authentication Method. Enums: STANDARD(101), LDAP(102), SMAL(103), CAS(104)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="auth_target_url" type="varchar(500)"
+                    remarks="Target URL for NON-STANDARD Authentication Method"/>
+            <column name="login_attempt" type="int" remarks="Max Login Failure attempts"/>
+            <column name="is_require_number" type="boolean" remarks="Password Policy: is number required?"
+                    defaultValueBoolean="false"/>
+            <column name="is_require_mix_case" type="boolean" remarks="Password Policy: is case mix required?"
+                    defaultValueBoolean="false"/>
+            <column name="is_require_symbol" type="boolean" remarks="Password Policy: is symbol required?"
+                    defaultValueBoolean="false"/>
+            <column name="max_same_password_count" type="int" remarks="max number of same history password"/>
+            <column name="last_updated_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated_by" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <loadData encoding="UTF-8"
+                  file="db/liquibase/data/release.1.0.0/security_policy.csv"
+                  separator=";"
+                  tableName="atl_security_policy">
+            <column name="is_require_number" type="boolean"/>
+            <column name="is_require_mix_case" type="boolean"/>
+            <column name="is_require_symbol" type="boolean"/>
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,3 @@
+id;client_id;client_secret;access_token_validity_seconds;refresh_token_validity_seconds;resource_ids;scopes;authorized_grant_types;registered_redirect_uri;authorities;auto_approve_scopes;additional_information;is_enabled;is_deleted;created_date;created_by;last_updated_date;last_updated_by
+239514855899537001;helios;123456Ms3;7200;7200;;openid;implicit,refresh_token,password,authorization_code,client_credential;;ROLE_ADMIN;;;1;0;2017-03-09 00:35:14;0;2017-03-09 00:35:14;0
+
